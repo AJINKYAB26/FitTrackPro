@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import cors from "cors";
-import connectDB from "../Backend/src/config/db.js";
+import connectDB from "./src/config/db.js";
 
 import userRoutes from "./src/routes/authRoutes.js";
 import categoryRoutes from "./src/routes/categoryRoutes.js";
@@ -22,7 +22,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173", 
+    origin: "*", 
     credentials: true,              
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
