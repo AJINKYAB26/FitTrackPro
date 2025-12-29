@@ -41,5 +41,5 @@ app.use("/api/emaildiet", sendemaildiet);
 console.log("OPENAI KEY:", process.env.HF_API_KEY);
 
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
