@@ -3,7 +3,9 @@ import dotenv from "dotenv";
 dotenv.config();
 import cors from "cors";
 import connectDB from "./src/config/db.js";
-
+import { fileURLToPath } from 'url'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 import userRoutes from "./src/routes/authRoutes.js";
 import categoryRoutes from "./src/routes/categoryRoutes.js";
 import exerciseTypeRoutes from "./src/routes/exerciseTypeRoutes.js";
@@ -19,6 +21,8 @@ console.log("OPENAI KEY:", process.env.OPENAI_API_KEY);
 connectDB();
 
 const app = express();
+import path from 'path'
+
 app.use(express.json());
 app.use(
   cors({
@@ -40,6 +44,11 @@ app.use("/api/emaildiet", sendemaildiet);
 
 console.log("OPENAI KEY:", process.env.HF_API_KEY);
 
+app.use(express.static(path.join(__dirname,"build")));
+
+app.get("/",(req,res) =>{
+  res.sendFile(path.join(__dirname,"build","index.html"));
+});
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
