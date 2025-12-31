@@ -43,20 +43,26 @@ export const FitnessProvider = ({ children }) => {
 
 
   /* ===================== FETCH LEVELS ===================== */
-  useEffect(() => {
-    api
-      .get("/categories")
-      .then((res) => setLevels(res.data.data))
-      .catch((err) => console.error("Levels error:", err));
-  }, []);
+ useEffect(() => {
+  api.get("/categories")
+    .then((res) => {
+      console.log("Categories response:", res.data);
+      setLevels(res.data.data || res.data || []);
+    })
+    .catch((err) => console.error("Levels error:", err));
+}, []);
+
 
   /* ===================== FETCH EXERCISE TYPES ===================== */
-  useEffect(() => {
-    api
-      .get("/exercise-types")
-      .then((res) => setExerciseTypes(res.data.data))
-      .catch((err) => console.error("Exercise types error:", err));
-  }, []);
+ useEffect(() => {
+  api.get("/exercise-types")
+    .then((res) => {
+      console.log("Exercise types response:", res.data);
+      setExerciseTypes(res.data.data || res.data || []);
+    })
+    .catch((err) => console.error("Exercise types error:", err));
+}, []);
+
 
   /* ===================== FETCH EXERCISES ===================== */
   console.log("RENDER → level:", selectedLevel);
