@@ -1,11 +1,12 @@
 import { Trash2, Pencil } from "lucide-react";
 import axios from "axios";
+import api from "../../lib/api";
 
 export default function ExerciseTable({ exercises, refresh, onEdit }) {
     const handleDelete = async (id) => {
         if (!window.confirm("Delete this exercise?")) return;
 
-        await axios.delete(`http://localhost:5000/api/exercises/${id}`, {
+        await api.delete(`/exercises/${id}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },

@@ -4,6 +4,8 @@ import axios from "axios";
 import { AuthContext } from "../components/context/AuthContext.jsx";
 import { Button } from "../components/UI/button.jsx";
 import { Mail, Lock, Eye, EyeOff, Dumbbell, X } from "lucide-react";
+import api from "../lib/api.jsx";
+
 
 export default function LoginPopup({ close }) {
   const { login } = useContext(AuthContext);
@@ -20,8 +22,8 @@ export default function LoginPopup({ close }) {
   setLoading(true);
 
   try {
-    const res = await axios.post(
-      "http://localhost:5000/api/users/login",
+    const res = await api.post(
+      "/users/login",
       { email, password }
     );
 

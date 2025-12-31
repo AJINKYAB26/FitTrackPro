@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from "../../components/UI/button";
+import api from "../../lib/api";
+
 
 export default function ExerciseForm({ close, refresh, editData }) {
   const [form, setForm] = useState({
@@ -17,11 +19,11 @@ export default function ExerciseForm({ close, refresh, editData }) {
   const [types, setTypes] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/categories").then((res) => {
+    api.get("/categories").then((res) => {
       setCategories(res.data);
     });
 
-    axios.get("http://localhost:5000/api/exercise-types").then((res) => {
+    api.get("/exercise-types").then((res) => {
       setTypes(res.data);
     });
   }, []);

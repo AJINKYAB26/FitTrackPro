@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Dumbbell, Layers, Users } from "lucide-react";
 import axios from "axios";
+import api from "../lib/api.jsx"
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState([
@@ -25,10 +26,10 @@ const AdminDashboard = () => {
 
         // Fetch all counts in parallel
         const [exRes, catRes, typeRes, userRes] = await Promise.all([
-          axios.get("http://localhost:5000/api/exercises"),
-          axios.get("http://localhost:5000/api/categories"),
-          axios.get("http://localhost:5000/api/exercise-types"),
-          axios.get("http://localhost:5000/api/users", config), // Auth required
+          api.get("/exercises"),
+          api.get("/categories"),
+          api.get("/exercise-types"),
+          api.get("/users", config), // Auth required
         ]);
 
         setStats([

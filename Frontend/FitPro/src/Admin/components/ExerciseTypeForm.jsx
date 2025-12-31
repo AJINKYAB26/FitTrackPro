@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import api from "../../lib/api";
 
 export default function ExerciseTypeForm({ refresh }) {
   const [name, setName] = useState("");
@@ -10,8 +11,8 @@ export default function ExerciseTypeForm({ refresh }) {
   const submit = async (e) => {
     e.preventDefault();
 
-    await axios.post(
-      "http://localhost:5000/api/exercise-types",
+    await api.post(
+      "/exercise-types",
       { name, icon },
       {
         headers: {

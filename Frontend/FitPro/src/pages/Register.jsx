@@ -41,7 +41,7 @@ const Register = () => {
     try {
       setLoading(true);
 
-      await axios.post("http://localhost:5000/api/users/register", {
+      await axios.post("http://13.127.181.216:5000/api/users/register", {
         name: form.name,
         email: form.email,
         password: form.password,

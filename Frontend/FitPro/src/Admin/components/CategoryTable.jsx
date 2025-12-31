@@ -1,12 +1,12 @@
 import axios from "axios";
 import { Trash2 } from "lucide-react";
-
+import api from "../../lib/api";
 export default function CategoryTable({ categories, refresh }) {
   const token = localStorage.getItem("token");
 
   const remove = async (id) => {
-    await axios.delete(
-      `http://localhost:5000/api/categories/${id}`,
+    await api.delete(
+      `/categories/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

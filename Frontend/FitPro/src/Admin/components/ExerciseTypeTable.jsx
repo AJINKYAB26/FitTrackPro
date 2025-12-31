@@ -1,12 +1,13 @@
 import axios from "axios";
 import { Trash2 } from "lucide-react";
+import api from "../../lib/api";
 
 export default function ExerciseTypeTable({ types, refresh }) {
   const token = localStorage.getItem("token");
 
   const remove = async (id) => {
-    await axios.delete(
-      `http://localhost:5000/api/exercise-types/${id}`,
+    await api.delete(
+      `/exercise-types/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

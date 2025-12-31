@@ -1,5 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
+import api from "../../lib/api";
+
 
 export default function CategoryForm({ refresh }) {
   const [name, setName] = useState("");
@@ -10,8 +12,8 @@ export default function CategoryForm({ refresh }) {
   const submit = async (e) => {
     e.preventDefault();
 
-    await axios.post(
-      "http://localhost:5000/api/categories",
+    await api.post(
+      "/categories",
       { name, icon },
       {
         headers: {
