@@ -8,7 +8,7 @@ export const CategorySelector = () => {
     setSelectedExerciseType,
   } = useFitness();
 
-  if (!exerciseTypes || exerciseTypes.length === 0) {
+  if (!Array.isArray(exerciseTypes) || exerciseTypes.length === 0) {
     return (
       <div className="glass-card rounded-2xl p-6 text-gray-400">
         Loading exercise categories...

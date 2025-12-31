@@ -4,7 +4,7 @@ import { useFitness } from "../context/FitnessContext";
 export const LevelSelector = () => {
   const { levels, selectedLevel, setSelectedLevel } = useFitness();
 
-  if (!levels || levels.length === 0) {
+  if (!Array.isArray(levels) || levels.length === 0) {
     return (
       <div className="glass-card rounded-2xl p-6 text-gray-400">
         Loading levels...

@@ -46,7 +46,7 @@ export const FitnessProvider = ({ children }) => {
   useEffect(() => {
     api
       .get("/categories")
-      .then((res) => setLevels(res.data))
+      .then((res) => setLevels(res.data.data))
       .catch((err) => console.error("Levels error:", err));
   }, []);
 
@@ -54,7 +54,7 @@ export const FitnessProvider = ({ children }) => {
   useEffect(() => {
     api
       .get("/exercise-types")
-      .then((res) => setExerciseTypes(res.data))
+      .then((res) => setExerciseTypes(res.data.data))
       .catch((err) => console.error("Exercise types error:", err));
   }, []);
 
