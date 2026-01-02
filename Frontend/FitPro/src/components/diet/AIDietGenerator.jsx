@@ -20,7 +20,7 @@ const AIDietGenerator = () => {
       const payload = { level, goal, dietType };
 
       // const res = await fetch("http://localhost:5000/api/diet/generate", {
-      const res = await fetch("http://13.127.181.216:5000/api/diet/generate", {
+      const res = await fetch("http://13.126.12.249:5000/api/diet/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
