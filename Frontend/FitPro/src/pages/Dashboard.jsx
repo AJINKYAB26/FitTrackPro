@@ -11,9 +11,13 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useContext } from "react";
+import { AuthContext } from "../components/context/AuthContext";
+
 
 export default function Dashboard() {
-  const { user, dailyStats, workoutHistory = [], } = useFitness();
+  const { dailyStats, workoutHistory = [], } = useFitness();
+  const { user } = useContext(AuthContext);
 
 
   const { weeklyCalories } = useFitness();
@@ -26,12 +30,16 @@ export default function Dashboard() {
       <main className="max-w-7xl mx-auto px-4 pt-24 pb-16">
         {/* Welcome */}
         <div className="mb-10">
-          <h1 className="text-4xl font-extrabold">
+          {/* <h1 className="text-4xl font-extrabold">
             Welcome back,{" "}
             <span className="text-yellow-400">
               {user?.name?.split(" ")[0] || "Athlete"}
             </span>
+          </h1> */}
+          <h1 className="text-2xl font-bold text-white">
+            Welcome back, {user?.name?.split(" ")[0] || "Athlete"} 👋
           </h1>
+
 
           <p className="text-gray-400 mt-2">
             Let’s crush your fitness goals 💪

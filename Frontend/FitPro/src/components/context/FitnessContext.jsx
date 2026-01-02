@@ -7,12 +7,16 @@ import React, {
 import api from "../../lib/api";
 
 const FitnessContext = createContext(null);
+import { AuthContext } from "../context/AuthContext"; // adjust path
 
 export const FitnessProvider = ({ children }) => {
   /* ===================== STATE ===================== */
 
   // Levels → beginner / intermediate / advanced
   const [levels, setLevels] = useState([]);
+
+  const { user } = useContext(AuthContext);
+
 
   // Exercise Types → legs / chest / shoulder
   const [exerciseTypes, setExerciseTypes] = useState([]);
@@ -29,7 +33,7 @@ export const FitnessProvider = ({ children }) => {
 
   const [loadingExercises, setLoadingExercises] = useState(false);
 
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
 
   const [dailyStats, setDailyStats] = useState({
     caloriesBurned: 0,
@@ -132,28 +136,26 @@ export const FitnessProvider = ({ children }) => {
       setTodaysWorkout([]);
     } catch (error) {
       console.error("Save workout failed:", error.response?.data || error);
+       throw error;
     }
   };
 
-  const fetchRecentWorkouts = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const user = JSON.parse(localStorage.getItem("user"));
+ const fetchRecentWorkouts = async () => {
+  if (!user?._id) return;
 
-      const res = await api.get(
-        `/workouts/recent?userId=${user.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  try {
+    const res = await api.get("/workouts/recent", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
 
-      setWorkoutHistory(res.data.data);
-    } catch (err) {
-      console.error("Fetch recent workouts failed", err);
-    }
-  };
+    setWorkoutHistory(res.data.data || []);
+  } catch (err) {
+    console.error("Fetch recent workouts failed", err);
+  }
+};
+
 
 
   const fetchTodayWorkout = async () => {
@@ -193,18 +195,34 @@ export const FitnessProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    fetchRecentWorkouts();
-    fetchTodayWorkout();
-     fetchWeeklyCalories();
-  }, []);
 
- useEffect(() => {
-  const storedUser = localStorage.getItem("user");
-  if (!storedUser) return;
+//  useEffect(() => {
+//   const storedUser = localStorage.getItem("user");
+//   if (!storedUser) return;
 
-  setUser(JSON.parse(storedUser));
-}, []);
+//   setUser(JSON.parse(storedUser));
+// }, []);
+useEffect(() => {
+  // 🧹 RESET OLD USER DATA
+  setDailyStats({
+    caloriesBurned: 0,
+    exercisesCompleted: 0,
+    streak: 0,
+  });
+  setWeeklyCalories(0);
+  setWorkoutHistory([]);
+  setTodaysWorkout([]);
+
+  // ❌ no user → stop
+  if (!user?._id) return;
+
+  // ✅ fetch data for NEW user
+  fetchRecentWorkouts();
+  fetchTodayWorkout();
+  fetchWeeklyCalories();
+
+}, [user?._id]);
+
 
 
 
@@ -233,8 +251,8 @@ export const FitnessProvider = ({ children }) => {
         workoutHistory,
 
         // 🔹 USER DATA
-        user,
-        setUser,
+        // user,
+        // setUser,
 
         // 🔹 DASHBOARD STATS
         dailyStats,

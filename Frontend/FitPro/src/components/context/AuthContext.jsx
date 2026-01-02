@@ -1,51 +1,51 @@
-import { createContext, useState, useEffect } from "react";
+  import { createContext, useState, useEffect } from "react";
 
-export const AuthContext = createContext();
+  export const AuthContext = createContext();
 
-export default function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem("token"));
+  export default function AuthProvider({ children }) {
+    const [user, setUser] = useState(null);
+    const [token, setToken] = useState(localStorage.getItem("token"));
 
- useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
 
-    try {
+      try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        setUser({
+          _id: payload.id,
+          name: payload.name,
+          role: payload.role,
+        });
+        setToken(token);
+      } catch {
+        localStorage.removeItem("token");
+        setUser(null);
+        setToken(null);
+      }
+    }, []);
+
+    const login = (token) => {
+      localStorage.setItem("token", token);
       const payload = JSON.parse(atob(token.split(".")[1]));
 
       setUser({
         _id: payload.id,
-        name: payload.name,   // ✅ THIS WAS MISSING
+        name: payload.name,
         role: payload.role,
       });
-    } catch (err) {
-      console.error("Invalid token");
+      setToken(token);
+    };
+
+    const logout = () => {
       localStorage.removeItem("token");
-    }
-  }, []);
+      setUser(null);
+      setToken(null);
+    };
 
-
-  const login = (token) => {
-    localStorage.setItem("token", token);
-
-    const payload = JSON.parse(atob(token.split(".")[1]));
-
-    setUser({
-      _id: payload.id,
-      name: payload.name,   // ✅ REQUIRED
-      role: payload.role,
-    });
-  };
-
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setToken(null);
-  };
-
-  return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
-}
+    return (
+      <AuthContext.Provider value={{ user, token, login, logout }}>
+        {children}
+      </AuthContext.Provider>
+    );
+  }

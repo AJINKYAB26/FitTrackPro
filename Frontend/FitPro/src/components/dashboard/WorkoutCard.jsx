@@ -2,14 +2,20 @@ import React from "react";
 import { Trash2, Flame, Clock } from "lucide-react";
 import { Button } from "../UI/button";
 import { useFitness } from "../context/FitnessContext";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
 
 const WorkoutCard = () => {
+  const navigate = useNavigate();
   const {
     todaysWorkout = [],
     removeFromWorkout,
     saveWorkout,
     clearWorkout,
   } = useFitness();
+
+  const [loading, setLoading] = useState(false);
 
   // ✅ Safe calculations
   const totalCalories = todaysWorkout.reduce(
@@ -21,6 +27,29 @@ const WorkoutCard = () => {
     (acc, ex) => acc + (ex.sets || 0) * 3,
     0
   );
+
+  const handleCompleteWorkout = async () => {
+    if (loading) return;
+
+    setLoading(true);
+
+    try {
+      await saveWorkout();
+
+      // ✅ SUCCESS POPUP
+      alert("🎉 Workout completed successfully!");
+
+      // ✅ REDIRECT
+      navigate("/dashboard");
+    } catch (err) {
+      alert(
+        err?.response?.data?.message ||
+        "Failed to save workout"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div
@@ -121,11 +150,13 @@ const WorkoutCard = () => {
 
           {/* ACTION */}
           <Button
-            className="w-full mt-5 bg-yellow-300 text-black font-bold hover:bg-yellow-400 transition"
-            onClick={saveWorkout}
+            className="w-full mt-5 bg-yellow-300 text-black font-bold"
+            onClick={handleCompleteWorkout}
+            disabled={loading}
           >
-            Complete Workout 🎉
+            {loading ? "Saving..." : "Complete Workout 🎉"}
           </Button>
+
         </>
       )}
     </div>
