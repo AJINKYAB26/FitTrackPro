@@ -10,7 +10,7 @@ export default function Exercises() {
 
   const fetchExercises = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/exercises", {
+      const res = await axios.get("http://13.126.12.249:5000/api/exercises", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -28,7 +28,7 @@ export default function Exercises() {
   const deleteExercise = async (id) => {
     if (!window.confirm("Delete this exercise?")) return;
 
-    await axios.delete(`http://localhost:5000/api/exercises/${id}`, {
+    await axios.delete(`http://13.126.12.249:5000/api/exercises/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

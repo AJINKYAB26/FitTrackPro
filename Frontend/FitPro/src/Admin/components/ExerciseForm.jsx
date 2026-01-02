@@ -51,8 +51,8 @@ export default function ExerciseForm({ close, refresh, editData }) {
     }
 
     const url = editData
-      ? `http://localhost:5000/api/exercises/${editData._id}`
-      : "http://localhost:5000/api/exercises";
+      ? `http://13.126.12.249:5000/api/exercises/${editData._id}`
+      : "http://13.126.12.249:5000/api/exercises";
 
     const method = editData ? "put" : "post";
 
