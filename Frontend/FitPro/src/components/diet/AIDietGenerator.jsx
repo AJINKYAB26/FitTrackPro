@@ -20,7 +20,7 @@ const AIDietGenerator = () => {
       const payload = { level, goal, dietType };
 
       // const res = await fetch("http://localhost:5000/api/diet/generate", {
-      const res = await fetch("http://13.126.12.249:5000/api/diet/generate", {
+      const res = await fetch("https://fittrackpro.onrender.com/api/diet/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +48,7 @@ const AIDietGenerator = () => {
       setSending(true);
       const token = localStorage.getItem("token");
 
-      const res = await fetch("http://localhost:5000/api/emaildiet/send-email", {
+      const res = await fetch("https://fittrackpro.onrender.com/api/emaildiet/send-email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

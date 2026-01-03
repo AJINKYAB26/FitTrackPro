@@ -9,7 +9,7 @@ export default function Categories() {
   const token = localStorage.getItem("token");
 
   const fetchCategories = async () => {
-    const res = await axios.get("http://13.126.12.249:5000/api/categories");
+    const res = await axios.get("https://fittrackpro.onrender.com/api/categories");
     setCategories(res.data);
   };
 

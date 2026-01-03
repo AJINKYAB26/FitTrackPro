@@ -8,7 +8,7 @@ export default function ExerciseTypes() {
 
   const fetchTypes = async () => {
     const res = await axios.get(
-      "http://13.126.12.249:5000/api/exercise-types"
+      "https://fittrackpro.onrender.com/api/exercise-types"
     );
     setTypes(res.data);
   };

@@ -41,7 +41,7 @@ const Register = () => {
     try {
       setLoading(true);
 
-      await axios.post("http://13.126.12.249:5000/api/users/register", {
+      await axios.post("https://fittrackpro.onrender.com/api/users/register", {
         name: form.name,
         email: form.email,
         password: form.password,
