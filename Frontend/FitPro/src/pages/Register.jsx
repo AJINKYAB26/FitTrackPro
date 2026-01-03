@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../lib/api";
 import { Button } from "../components/UI/button";
 import {
   User,
@@ -41,7 +41,7 @@ const Register = () => {
     try {
       setLoading(true);
 
-      await axios.post("https://fittrackpro.onrender.com/api/users/register", {
+      await api.post("https://fittrackpro.onrender.com/api/users/register", {
         name: form.name,
         email: form.email,
         password: form.password,

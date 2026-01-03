@@ -1,6 +1,5 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { AuthContext } from "../components/context/AuthContext.jsx";
 import { Button } from "../components/UI/button.jsx";
 import { Mail, Lock, Eye, EyeOff, Dumbbell, X } from "lucide-react";
@@ -26,6 +25,8 @@ export default function LoginPopup({ close }) {
       "/users/login",
       { email, password }
     );
+    console.log("LOGIN RESPONSE 👉", res.data);
+
 
     const { token, user } = res.data;
 
@@ -34,16 +35,20 @@ export default function LoginPopup({ close }) {
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(user));
 
-    login(token);
+   login(token);
 
-    close();
+if (typeof close === "function") {
+  close();
+}
+
+navigate(user.role === "admin" ? "/admin" : "/dashboard");
 
     // ✅ Role-based redirect
-    if (user.role === "admin") {
-      navigate("/admin");
-    } else {
-      navigate("/dashboard");
-    }
+    // if (user.role === "admin") {
+    //   navigate("/admin");
+    // } else {
+    //   navigate("/dashboard");
+    // }
   } catch (err) {
     setError(err.response?.data?.message || "Invalid credentials");
   } finally {
